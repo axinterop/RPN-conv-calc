@@ -8,4 +8,5 @@ include_directories(.)
 add_executable(project1
         ll-stack.cpp
         ll-stack.h
-        main.cpp)
+        main.cpp
+        String.cpp)
