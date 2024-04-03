@@ -41,7 +41,7 @@ int get_priority(const String s) {
         return 0;
     else if (s == '*' || s == '/')
         return 1;
-    else if (s == "IF" || s == "N" || s.starts_with("MIN", 3) || s.starts_with("MAX", 3))
+    else if (s == "IF" || s == "N" || s == "MIN" || s == "MAX")
         return 2;
     else if (is_bracket(s))
         return 3;
@@ -59,14 +59,20 @@ void output_token(const String s) {
     cout << s << "  ";
 }
 
+void output_token(const String s, int i) {
+    if (s == "MIN" || s == "MAX")
+        cout << s << i << "  ";
+    else
+        output_token(s);
+}
+
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     Stack<String> s;
-
-    int commaCount = 0;
+    Stack<int> cS;
 
     int inputNum;
     scanf("%i", &inputNum);
@@ -86,32 +92,46 @@ int main() {
                 output_token(c);
 
             else if (is_func(c)) {
+                if (c == "MAX" || c == "MIN")
+                    cS.push(1);
                 s.push(c);
-            }
-
-            else if (is_operator(c)) {
+            } else if (is_operator(c)) {
                 while (!s.isEmpty() && s.peek() != "(") {
                     if (get_priority(s.peek()) >= get_priority(c)) {
-                        output_token(s.peek());
+                        if (!cS.isEmpty()) {
+                            output_token(s.peek(), cS.peek());
+                            cS.pop();
+                        } else
+                            output_token(s.peek());
                         s.pop();
                     } else
                         break;
                 }
                 s.push(c);
             } else if (c == ",") {
-                commaCount++;
                 while (!s.isEmpty() && s.peek() != "(") {
-                    output_token(s.peek());
+                    if (!cS.isEmpty()) {
+                        output_token(s.peek(), cS.peek());
+                        cS.pop();
+                    } else
+                        output_token(s.peek());
                     s.pop();
                 }
-            }
-
-            else if (c == "(")
+                if (!cS.isEmpty()) {
+                    int cInc = cS.peek() + 1;
+                    cS.pop();
+                    cS.push(cInc);
+                }
+            } else if (c == "(")
                 s.push(c);
 
             else if (c == ")") {
                 while (!s.isEmpty() && s.peek() != "(") {
-                    output_token(s.peek());
+                    if (!cS.isEmpty()) {
+                        output_token(s.peek(), cS.peek());
+                        cS.pop();
+                    } else
+                        output_token(s.peek());
                     s.pop();
                 }
                 if (s.peek() == "(")
@@ -119,7 +139,11 @@ int main() {
             }
         }
         while (!s.isEmpty()) {
-            output_token(s.peek());
+            if (!cS.isEmpty()) {
+                output_token(s.peek(), cS.peek());
+                cS.pop();
+            } else
+                output_token(s.peek());
             s.pop();
         }
         cout << endl;
