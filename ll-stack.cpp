@@ -16,8 +16,10 @@ template <typename T> T Stack<T>::peek() {
         exit(1);
 };
 
+template <typename T> bool Stack<T>::peek_next_exists() { return !isEmpty() && top->next != nullptr; };
+
 template <typename T> T Stack<T>::peek_next() {
-    if (!isEmpty())
+    if (!isEmpty() && top->next != nullptr)
         return top->next->data;
     else
         exit(1);

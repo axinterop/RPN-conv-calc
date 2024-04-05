@@ -9,6 +9,9 @@ using namespace std;
 #define BUF_SIZE 16
 
 bool is_func(const String s) {
+    if (s == "MAX" || s == "MIN" || s == "IF" || s == "N")
+        return true;
+    return false;
     int i = 0, max = 3;
     if (s.length() < 3)
         max = s.length();
@@ -103,9 +106,7 @@ int main() {
                         if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
                             cout << cS.peek();
                             cS.pop();
-                            last_is_m = last_is_m >> 1;
-                        } else if (s.peek() == "IF" || s.peek() == "N")
-                            last_is_m = last_is_m >> 1;
+                        }
                         cout << "  ";
                         s.pop();
                     } else
@@ -118,9 +119,7 @@ int main() {
                     if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
                         cout << cS.peek();
                         cS.pop();
-                        last_is_m = last_is_m >> 1;
-                    } else if (s.peek() == "IF" || s.peek() == "N")
-                        last_is_m = last_is_m >> 1;
+                    }
                     cout << "  ";
                     s.pop();
                 }
@@ -135,16 +134,18 @@ int main() {
             else if (c == ")") {
                 while (!s.isEmpty() && s.peek() != "(") {
                     output_token(s.peek());
-                    if (!cS.isEmpty() && (s.peek_next() == "MAX" || s.peek_next() == "MIN")) {
+                    if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
                         cout << cS.peek();
                         cS.pop();
-                        last_is_m = last_is_m >> 1;
                     }
                     cout << "  ";
                     s.pop();
                 }
-                if (s.peek() == "(")
+                if (s.peek() == "(") {
+                    if (last_is_m && is_func(s.peek_next()))
+                        last_is_m = last_is_m >> 1;
                     s.pop();
+                }
             }
         }
         while (!s.isEmpty()) {
