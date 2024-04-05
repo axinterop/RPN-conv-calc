@@ -16,6 +16,14 @@ template <typename T> T Stack<T>::peek() {
         exit(1);
 };
 
+template <typename T> T Stack<T>::peek_next() {
+    if (!isEmpty())
+        return top->next->data;
+    else
+        exit(1);
+};
+
+
 template <typename T> void Stack<T>::pop() {
     Node<T> *tmp;
     if (top == nullptr)

@@ -56,15 +56,10 @@ bool is_operator(const String s) {
 }
 
 void output_token(const String s) {
-    cout << s << "  ";
+    cout << s;
 }
 
-void output_token(const String s, int i) {
-    if (s == "MIN" || s == "MAX")
-        cout << s << i << "  ";
-    else
-        output_token(s);
-}
+
 
 
 int main() {
@@ -75,6 +70,7 @@ int main() {
     Stack<int> cS;
 
     int inputNum;
+    long long int last_is_m = 0;
     scanf("%i", &inputNum);
     for (int i = 0; i < inputNum; i++) {
         char f[BUF_SIZE];
@@ -88,21 +84,29 @@ int main() {
             c = String(f);
 
             // If token ...
-            if (is_number(c))
+            if (is_number(c)) {
                 output_token(c);
+                cout << "  ";
+            }
 
             else if (is_func(c)) {
-                if (c == "MAX" || c == "MIN")
+                if (c == "MAX" || c == "MIN") {
+                    last_is_m = (last_is_m << 1) + 1;
                     cS.push(1);
+                } else
+                    last_is_m = last_is_m << 1;
                 s.push(c);
             } else if (is_operator(c)) {
                 while (!s.isEmpty() && s.peek() != "(") {
                     if (get_priority(s.peek()) >= get_priority(c)) {
-                        if (!cS.isEmpty()) {
-                            output_token(s.peek(), cS.peek());
+                        output_token(s.peek());
+                        if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
+                            cout << cS.peek();
                             cS.pop();
-                        } else
-                            output_token(s.peek());
+                            last_is_m = last_is_m >> 1;
+                        } else if (s.peek() == "IF" || s.peek() == "N")
+                            last_is_m = last_is_m >> 1;
+                        cout << "  ";
                         s.pop();
                     } else
                         break;
@@ -110,14 +114,17 @@ int main() {
                 s.push(c);
             } else if (c == ",") {
                 while (!s.isEmpty() && s.peek() != "(") {
-                    if (!cS.isEmpty()) {
-                        output_token(s.peek(), cS.peek());
+                    output_token(s.peek());
+                    if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
+                        cout << cS.peek();
                         cS.pop();
-                    } else
-                        output_token(s.peek());
+                        last_is_m = last_is_m >> 1;
+                    } else if (s.peek() == "IF" || s.peek() == "N")
+                        last_is_m = last_is_m >> 1;
+                    cout << "  ";
                     s.pop();
                 }
-                if (!cS.isEmpty()) {
+                if ((last_is_m & 1) && !cS.isEmpty()) {
                     int cInc = cS.peek() + 1;
                     cS.pop();
                     cS.push(cInc);
@@ -127,11 +134,13 @@ int main() {
 
             else if (c == ")") {
                 while (!s.isEmpty() && s.peek() != "(") {
-                    if (!cS.isEmpty()) {
-                        output_token(s.peek(), cS.peek());
+                    output_token(s.peek());
+                    if (!cS.isEmpty() && (s.peek_next() == "MAX" || s.peek_next() == "MIN")) {
+                        cout << cS.peek();
                         cS.pop();
-                    } else
-                        output_token(s.peek());
+                        last_is_m = last_is_m >> 1;
+                    }
+                    cout << "  ";
                     s.pop();
                 }
                 if (s.peek() == "(")
@@ -139,11 +148,12 @@ int main() {
             }
         }
         while (!s.isEmpty()) {
-            if (!cS.isEmpty()) {
-                output_token(s.peek(), cS.peek());
+            output_token(s.peek());
+            if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
+                cout << cS.peek();
                 cS.pop();
-            } else
-                output_token(s.peek());
+            }
+            cout << "  ";
             s.pop();
         }
         cout << endl;

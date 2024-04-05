@@ -19,6 +19,9 @@ template <typename T> class Stack {
     void push(T data);
     bool isEmpty();
     T peek();
+    T peek_next();
     void pop();
     void display();
 };
+
+
