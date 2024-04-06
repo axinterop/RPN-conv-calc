@@ -141,10 +141,8 @@ void ONPCalculate(Queue<String> &onp) {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-
+//    ios_base::sync_with_stdio(false);
+//    cin.tie(NULL);
 
     int inputNum;
     scanf("%i", &inputNum);
@@ -178,9 +176,8 @@ int main() {
                 while (!s.isEmpty() && s.peek() != "(") {
                     if (get_priority(s.peek()) >= get_priority(c)) {
                         if (!cS.isEmpty() && s.peek()[0] == 'M') {
-                            onp.enqueue(s.peek() + cS.peek()); // TODO: Replace concatenation [str + int] by making cS.peek().to_str()?
-                            cS.pop();                               /* TODO: Replace concatenation [str + int] by adding cS.peek() to onp queue as as str, and during calculation and output handle it properly?
-                                                                    */
+                            onp.enqueue(s.peek() + cS.peek());
+                            cS.pop();
                         } else
                             onp.enqueue(s.peek());
                         s.pop();

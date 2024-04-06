@@ -20,7 +20,6 @@ template <typename T> class Stack {
     bool isEmpty();
     T peek();
     T peek_next();
-    bool peek_next_exists();
     void pop();
     void display(bool wide);
 };

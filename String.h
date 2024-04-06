@@ -21,12 +21,9 @@ public:
 
     void reset();
     size_t length() const;
-    char* asCString() const;
     int to_int() const;
     String substr(int start, int len) const;
 
-    //Cast to const char
-    operator const char* () const;
 
     //Bracket Operator overloads
     char operator[](int _index) const;
@@ -40,10 +37,8 @@ public:
 
 
     //Copy Assignment Operator
-    String& operator=(const String& _other);
+    String& operator=(String _other);
 
-    //Move Assignment Operator
-    String& operator=(String&& _other) noexcept;
 
     //Add Operators
     String& operator+=(const String& _other);
@@ -51,6 +46,8 @@ public:
     String operator+(const String& _other) const;
     String operator+(const char* _other) const;
     String operator+(const int N) const;
+
+    friend void swap(String& first, String& second) noexcept;
 
     //Stream Operator
     friend std::ostream& operator<<(std::ostream& _os, const String& _string);

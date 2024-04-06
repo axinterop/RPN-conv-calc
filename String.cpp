@@ -1,16 +1,20 @@
 #include "String.h"
 
-String::String() : m_length(0), m_string()
+String::String()
+        : m_length{0}, m_string{new char[1]{}}
 {
-    m_string = new char[1];
-    m_string[0] = '\0';
 }
 
-String::String(char _char) : m_length(1)
+String::String(char c)
+        : m_length{1}, m_string{new char[2]{c}}
 {
-    m_string = new char[2];
-    m_string[0] = _char;
-    m_string[1] = '\0';
+}
+
+String::String(const String& _string)
+        : m_length{_string.m_length}, m_string{new char[m_length + 1]}
+{
+    std::copy(_string.m_string, _string.m_string + _string.m_length, m_string);
+    m_string[m_length] = '\0';
 }
 
 String::String(const char* _string)
@@ -30,30 +34,15 @@ String::String(const char* _string)
     }
 }
 
-String::String(const String& _string)
-{
-    char* buffer = new char[_string.m_length + 1];
-    std::copy(_string.m_string, _string.m_string + _string.m_length, buffer);
-    buffer[_string.m_length] = '\0';
-
-    m_string = buffer;
-    m_length = _string.m_length;
-}
-
 String::String(String&& _string) noexcept
+    : String{}
 {
-    const auto buffer = _string.m_string;
-
-    m_length = _string.m_length;
-    m_string = buffer;
-
-    _string.reset();
+    swap(*this, _string);
 }
 
 String::~String()
 {
     delete[] m_string;
-    m_string = nullptr;
 }
 
 void String::reset()
@@ -67,15 +56,7 @@ size_t String::length() const
     return m_length;
 }
 
-char* String::asCString() const
-{
-    return m_string;
-}
 
-String::operator const char*() const
-{
-    return m_string;
-}
 
 char String::operator[](int _index) const
 {
@@ -116,54 +97,15 @@ bool String::operator!=(const char *_chars) const {
     return !(*this == _chars);
 }
 
-String& String::operator=(const String& _other)
-{
-    if (this != &_other) {
-        char* buffer = new char[_other.m_length + 1];
-        std::copy(_other.m_string, _other.m_string + _other.m_length + 1, buffer);
-
-        std::swap(buffer, m_string);
-        m_length = _other.m_length;
-
-        delete[] buffer;
-    }
-
+String& String::operator=(String _other) {
+    swap(*this, _other);
     return *this;
-}
 
-String& String::operator=(String&& _other) noexcept
-{
-    if (this != &_other) {
-        const auto buffer = _other.m_string;
-
-        delete[] m_string;
-
-        m_string = buffer;
-        m_length = _other.m_length;
-
-        _other.reset();
-    }
-
-    return *this;
 }
 
 String& String::operator+=(const String& _other)
 {
-    if (this != &_other)
-    {
-        auto totalLength = m_length + _other.m_length;
-        char* buffer = new char[totalLength + 1];
-
-        std::copy(m_string, m_string + m_length, buffer);
-        std::copy(_other.m_string, _other.m_string + _other.m_length, buffer + m_length);
-        buffer[totalLength] = '\0';
-
-        std::swap(m_string, buffer);
-        m_length = totalLength;
-
-        delete[] buffer;
-    }
-
+    *this = *this + _other;
     return *this;
 }
 
@@ -187,14 +129,13 @@ String& String::operator+=(const char* _other)
 
 String String::operator+(const String& _other) const
 {
-    const auto totalLength = m_length + _other.m_length;
-    char* buffer = new char[totalLength + 1];
-
-    std::copy(m_string, m_string + m_length, buffer);
-    std::copy(_other.m_string, _other.m_string + _other.m_length, buffer + m_length);
-    buffer[totalLength] = '\0';
-
-    return String(buffer);
+    String result;
+    result.m_length = m_length + _other.m_length;
+    result.m_string = new char[result.m_length + 1];
+    std::copy(m_string, m_string + m_length, result.m_string);
+    std::copy(_other.m_string, _other.m_string + _other.m_length, result.m_string);
+    result[result.m_length] = '\0';
+    return result;
 }
 
 String String::operator+(const char* _other) const
@@ -207,22 +148,16 @@ String String::operator+(const char* _other) const
     std::copy(_other, _other + charLength, buffer + m_length);
     buffer[totalLength] = '\0';
 
-    return String(buffer);
+    String r = String(buffer);
+    delete[] buffer;
+    return r;
 }
 
 String String::operator+(const int N) const
 {
     char t[3];
-    const auto charLength = sprintf(t, "%d", N);
-
-    const auto totalLength = m_length + charLength;
-    char* buffer = new char[totalLength + 1];
-
-    std::copy(m_string, m_string + m_length, buffer);
-    std::copy(t, t + charLength, buffer + m_length);
-    buffer[totalLength] = '\0';
-
-    return String(buffer);
+    sprintf(t, "%d", N);
+    return *this + t;
 }
 
 std::ostream& operator<<(std::ostream& _os, const String& _string)
@@ -239,7 +174,15 @@ String String::substr(int start, int len) const {
     char* des = new char[len];
     strncpy(des, m_string + start, len);
     des[len] = '\0';
-    return String(des);
+
+    String r = String(des);
+    delete[] des;
+    return r;
+}
+
+void swap(String &first, String &second) noexcept {
+    std::swap(first.m_length, second.m_length);
+    std::swap(first.m_string, second.m_string);
 }
 
 

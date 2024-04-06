@@ -16,7 +16,6 @@ template <typename T> T Stack<T>::peek() {
         exit(1);
 };
 
-template <typename T> bool Stack<T>::peek_next_exists() { return !isEmpty() && top->next != nullptr; };
 
 template <typename T> T Stack<T>::peek_next() {
     if (!isEmpty() && top->next != nullptr)
@@ -33,8 +32,8 @@ template <typename T> void Stack<T>::pop() {
     else {
         tmp = top;
         top = top->next;
-        free(tmp);
     }
+    delete tmp;
 }
 
 template <typename T> void Stack<T>::display(bool wide) {

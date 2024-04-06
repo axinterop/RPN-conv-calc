@@ -2,7 +2,7 @@
 #include <iostream>
 
 template <typename T> void Queue<T>::enqueue(T data) {
-    Node<T> *newNode = new Node<T>(data);
+    auto *newNode = new Node<T>(data);
     if (rear == nullptr) {
         front = rear = newNode;
         return;
