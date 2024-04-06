@@ -221,6 +221,22 @@ String String::operator+(const char* _other) const
     return String(buffer);
 }
 
+String String::operator+(const int N) const
+{
+    char t[3];
+    const auto charLength = sprintf(t, "%d", N);
+
+    const auto totalLength = m_length + charLength;
+    char* buffer = new char[totalLength + 1];
+
+
+    std::copy(m_string, m_string + m_length, buffer);
+    std::copy(t, t + charLength, buffer + m_length);
+    buffer[totalLength] = '\0';
+
+    return String(buffer);
+}
+
 std::ostream& operator<<(std::ostream& _os, const String& _string)
 {
     _os << _string.m_string;

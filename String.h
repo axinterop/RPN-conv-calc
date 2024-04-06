@@ -50,6 +50,7 @@ public:
     String& operator+=(const char* _other);
     String operator+(const String& _other) const;
     String operator+(const char* _other) const;
+    String operator+(const int N) const;
 
     //Stream Operator
     friend std::ostream& operator<<(std::ostream& _os, const String& _string);

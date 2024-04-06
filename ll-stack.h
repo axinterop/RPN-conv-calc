@@ -26,3 +26,19 @@ template <typename T> class Stack {
 };
 
 
+
+template <typename T> class Queue {
+    Node<T> *front;
+    Node<T> *rear;
+
+public:
+    Queue<T>() { front = rear = nullptr; };
+    void enqueue(T data);
+    bool isEmpty();
+    T peek();
+    void dequeue();
+    void display();
+};
+
+
+

@@ -1,4 +1,5 @@
 #include "ll-stack.cpp"
+#include "ll-queue.cpp"
 #include "ll-stack.h"
 #include "String.h"
 #include <cstdio>
@@ -9,9 +10,6 @@ using namespace std;
 #define BUF_SIZE 16
 
 bool is_func(const String s) {
-    if (s == "MAX" || s == "MIN" || s == "IF" || s == "N")
-        return true;
-    return false;
     int i = 0, max = 3;
     if (s.length() < 3)
         max = s.length();
@@ -40,11 +38,11 @@ bool is_bracket(const String s) {
 }
 
 int get_priority(const String s) {
-    if (s == '+' || s == '-')
+    if (s[0] == '+' || s[0] == '-')
         return 0;
-    else if (s == '*' || s == '/')
+    else if (s[0] == '*' || s[0] == '/')
         return 1;
-    else if (s == "IF" || s == "N" || s == "MIN" || s == "MAX")
+    else if (s[0] == 'I' || s[0] == 'N' || s[0] == 'M')
         return 2;
     else if (is_bracket(s))
         return 3;
@@ -53,16 +51,10 @@ int get_priority(const String s) {
 }
 
 bool is_operator(const String s) {
-    if (s == '+' || s == '-' || s == '*' || s == '/' || s == "N")
+    if (s[0] == '+' || s[0] == '-' || s[0] == '*' || s[0] == '/' || s[0] == 'N')
         return true;
     return false;
 }
-
-void output_token(const String s) {
-    cout << s;
-}
-
-
 
 
 int main() {
@@ -76,6 +68,7 @@ int main() {
     long long int last_is_m = 0;
     scanf("%i", &inputNum);
     for (int i = 0; i < inputNum; i++) {
+        Queue<String> onp;
         char f[BUF_SIZE];
         String c;
         while (true) {
@@ -88,12 +81,9 @@ int main() {
 
             // If token ...
             if (is_number(c)) {
-                output_token(c);
-                cout << "  ";
-            }
-
-            else if (is_func(c)) {
-                if (c == "MAX" || c == "MIN") {
+                onp.enqueue(c);
+            } else if (is_func(c)) {
+                if (c[0] == 'M') {
                     last_is_m = (last_is_m << 1) + 1;
                     cS.push(1);
                 } else
@@ -102,12 +92,11 @@ int main() {
             } else if (is_operator(c)) {
                 while (!s.isEmpty() && s.peek() != "(") {
                     if (get_priority(s.peek()) >= get_priority(c)) {
-                        output_token(s.peek());
-                        if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
-                            cout << cS.peek();
+                        if (!cS.isEmpty() && s.peek()[0] == 'M') {
+                            onp.enqueue(s.peek() + cS.peek());
                             cS.pop();
-                        }
-                        cout << "  ";
+                        } else
+                            onp.enqueue(s.peek());
                         s.pop();
                     } else
                         break;
@@ -115,12 +104,11 @@ int main() {
                 s.push(c);
             } else if (c == ",") {
                 while (!s.isEmpty() && s.peek() != "(") {
-                    output_token(s.peek());
-                    if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
-                        cout << cS.peek();
+                    if (!cS.isEmpty() && s.peek()[0] == 'M') {
+                        onp.enqueue(s.peek() + cS.peek());
                         cS.pop();
-                    }
-                    cout << "  ";
+                    } else
+                        onp.enqueue(s.peek());
                     s.pop();
                 }
                 if ((last_is_m & 1) && !cS.isEmpty()) {
@@ -133,12 +121,11 @@ int main() {
 
             else if (c == ")") {
                 while (!s.isEmpty() && s.peek() != "(") {
-                    output_token(s.peek());
-                    if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
-                        cout << cS.peek();
+                    if (!cS.isEmpty() && s.peek()[0] == 'M') {
+                        onp.enqueue(s.peek() + cS.peek());
                         cS.pop();
-                    }
-                    cout << "  ";
+                    } else
+                        onp.enqueue(s.peek());
                     s.pop();
                 }
                 if (s.peek() == "(") {
@@ -149,14 +136,17 @@ int main() {
             }
         }
         while (!s.isEmpty()) {
-            output_token(s.peek());
-            if (!cS.isEmpty() && (s.peek() == "MAX" || s.peek() == "MIN")) {
-                cout << cS.peek();
+            if (!cS.isEmpty() && s.peek()[0] == 'M') {
+                onp.enqueue(s.peek() + cS.peek());
                 cS.pop();
-            }
-            cout << "  ";
+            } else
+                onp.enqueue(s.peek());
             s.pop();
         }
+        onp.display();
         cout << endl;
     }
+
+
+    return 0;
 }
