@@ -99,6 +99,12 @@ void ONPCalculate(Queue<String> &onp) {
                     ops.push(o1 / o2);
                 else {
                     cout << "ERROR\n";
+                    while (!onp.isEmpty()) {
+                        onp.dequeue();
+                    }
+                    while (!ops.isEmpty()) {
+                        ops.pop();
+                    }
                     err = true;
                     break;
                 }

@@ -5,7 +5,7 @@ template <typename T> class Node {
     T data;
     Node *next;
 
-    Node(T n) {
+    Node(T &n) {
         this->data = n;
         this->next = nullptr;
     }
