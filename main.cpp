@@ -144,13 +144,14 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    Stack<String> s;
-    Stack<int> cS;
+
 
     int inputNum;
-    long long int last_is_m = 0;
     scanf("%i", &inputNum);
     for (int i = 0; i < inputNum; i++) {
+        Stack<String> s;
+        Stack<int> cS;
+        long long int last_is_m = 0;
         cout << endl;
         Queue<String> onp;
         char f[BUF_SIZE];
@@ -170,7 +171,7 @@ int main() {
                 if (c[0] == 'M') {
                     last_is_m = (last_is_m << 1) + 1;
                     cS.push(1);
-                } else
+                } else if (c[0] != 'N')
                     last_is_m = last_is_m << 1;
                 s.push(c);
             } else if (is_operator(c)) {
@@ -179,8 +180,6 @@ int main() {
                         if (!cS.isEmpty() && s.peek()[0] == 'M') {
                             onp.enqueue(s.peek() + cS.peek()); // TODO: Replace concatenation [str + int] by making cS.peek().to_str()?
                             cS.pop();                               /* TODO: Replace concatenation [str + int] by adding cS.peek() to onp queue as as str, and during calculation and output handle it properly?
-
-
                                                                     */
                         } else
                             onp.enqueue(s.peek());
@@ -216,7 +215,7 @@ int main() {
                     s.pop();
                 }
                 if (s.peek() == "(") {
-                    if (last_is_m && is_func(s.peek_next()))
+                    if (last_is_m && is_func(s.peek_next()) && s.peek_next()[0] != 'N')
                         last_is_m = last_is_m >> 1;
                     s.pop();
                 }

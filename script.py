@@ -40,16 +40,16 @@ if __name__ == "__main__":
             for i in range(0, len(test)):
                 if test[i] != my[i]:
                     err += 1
-                    print(f"[{L}] ({i + 2}) NOT OK")
-                elif test[i] == my[i]:
-                    print(f"[{L}] ({i + 2}) OK")
+                    print(f"[{L}] ({i + 1}) NOT OK \t\t {test[i][:25]}")
+                # elif test[i] == my[i]:
+                    # print(f"[{L}] ({i + 2}) OK")
             if err == len(test):
                 print(f"[{L}] all error")
             if err == 0:
                 passed.append(L)
                 print(f"[{L}] passed")
         except Exception as e:
-            print(f"[{L}] ({i + 2}) <--- ERROR occured {test[i][:25]}")
+            print(f"[{L}] ({i + 1}) <--- ERROR occured \t\t {test[i][:25]}")
             print(e)
         print()
 
