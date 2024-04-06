@@ -37,7 +37,7 @@ template <typename T> void Queue<T>::dequeue() {
     delete temp;
 }
 
-template <typename T> void Queue<T>::display() {
+template <typename T> void Queue<T>::display(bool wide) {
     if (isEmpty()) {
         std::cout << "Empty Queue\n";
         return;
@@ -48,7 +48,10 @@ template <typename T> void Queue<T>::display() {
         std::cout << temp->data;
         temp = temp->next;
         if (temp != nullptr) {
-            std::cout << "  ";
+            if (wide)
+                std::cout << "  ";
+            else
+                std::cout << " ";
         }
     }
 //    std::cout << " <- Rear\n";

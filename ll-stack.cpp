@@ -37,18 +37,20 @@ template <typename T> void Stack<T>::pop() {
     }
 }
 
-template <typename T> void Stack<T>::display() {
+template <typename T> void Stack<T>::display(bool wide) {
     Node<T> *tmp;
     if (top == nullptr) {
         std::cout << "empty List\n";
     } else {
-        std::cout << "-> ";
         tmp = top;
         while (tmp != nullptr) {
             std::cout << tmp->data;
             tmp = tmp->next;
             if (tmp != nullptr)
-                std::cout << " ";
+                if (wide)
+                    std::cout << "  ";
+                else
+                    std::cout << " ";
         }
         std::cout << "\n";
     }

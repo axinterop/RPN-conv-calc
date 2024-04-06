@@ -9,20 +9,20 @@ def get_test(n):
     with open(f"p1_tests/{n}.out") as f:
         lines = f.readlines()
         lines = [l.strip() for l in lines]
-        for i in range(len(lines)):
-            if lines[i] == "":
-                test.append(lines[i + 1])
-    return test
+        # for i in range(len(lines)):
+        #     if lines[i] == "":
+        #         test.append(lines[i + 1])
+        return lines
 
 def delete_files():
     for i in range(10):
         try:
-            os.remove(f"p1_tests/{i}.my")
+            os.remove(f"p1_tests/{i}my.out")
         except:
             pass
 
 def get_my(n):
-    with open(f"p1_tests/{n}.my") as f:
+    with open(f"p1_tests/{n}my.out") as f:
         lines = f.readlines()
         my = [l.strip() for l in lines]
         return my
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     for L in range(0, 10):
         try:
-            os.system(f"cmake-build-debug/project1 < p1_tests/{L}.in > p1_tests/{L}.my")
+            os.system(f"cmake-build-debug/project1 < p1_tests/{L}.in > p1_tests/{L}my.out")
             test = get_test(L)
             my = get_my(L)
             err = 0

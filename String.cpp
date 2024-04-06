@@ -1,4 +1,3 @@
-#pragma once
 #include "String.h"
 
 String::String() : m_length(0), m_string()
@@ -106,16 +105,6 @@ bool String::operator==(const char* _chars) const
 {
     if (!_chars) return false;
     return strcmp(m_string, _chars) == 0;
-}
-
-bool String::starts_with(const String &_other, int n) const {
-    if (!_other.m_string) return false;
-    return strncmp(m_string, _other.m_string, n) == 0;
-}
-
-bool String::starts_with(const char *_chars, int n) const {
-    if (!_chars) return false;
-    return strncmp(m_string, _chars, n) == 0;
 }
 
 
@@ -229,7 +218,6 @@ String String::operator+(const int N) const
     const auto totalLength = m_length + charLength;
     char* buffer = new char[totalLength + 1];
 
-
     std::copy(m_string, m_string + m_length, buffer);
     std::copy(t, t + charLength, buffer + m_length);
     buffer[totalLength] = '\0';
@@ -241,6 +229,17 @@ std::ostream& operator<<(std::ostream& _os, const String& _string)
 {
     _os << _string.m_string;
     return _os;
+}
+
+int String::to_int() const {
+    return atoi(m_string);
+}
+
+String String::substr(int start, int len) const {
+    char* des = new char[len];
+    strncpy(des, m_string + start, len);
+    des[len] = '\0';
+    return String(des);
 }
 
 

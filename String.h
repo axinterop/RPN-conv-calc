@@ -22,6 +22,8 @@ public:
     void reset();
     size_t length() const;
     char* asCString() const;
+    int to_int() const;
+    String substr(int start, int len) const;
 
     //Cast to const char
     operator const char* () const;
@@ -36,8 +38,6 @@ public:
     bool operator!=(const String& _other) const;
     bool operator!=(const char* _chars) const;
 
-    bool starts_with(const String& _other, int n) const;
-    bool starts_with(const char* _chars, int n) const;
 
     //Copy Assignment Operator
     String& operator=(const String& _other);

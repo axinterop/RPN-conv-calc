@@ -22,7 +22,7 @@ template <typename T> class Stack {
     T peek_next();
     bool peek_next_exists();
     void pop();
-    void display();
+    void display(bool wide);
 };
 
 
@@ -37,7 +37,7 @@ public:
     bool isEmpty();
     T peek();
     void dequeue();
-    void display();
+    void display(bool wide);
 };
 
 
