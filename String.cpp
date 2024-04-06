@@ -171,7 +171,7 @@ int String::to_int() const {
 }
 
 String String::substr(int start, int len) const {
-    char* des = new char[len];
+    char* des = new char[len + 1];
     strncpy(des, m_string + start, len);
     des[len] = '\0';
 
