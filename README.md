@@ -13,7 +13,7 @@ Tt accepts only not-negative integers as an input, but can calculate and output 
 
 Below are the rules I followed while working on the project.
 
----
+
 
 # Rules
 
