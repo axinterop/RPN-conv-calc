@@ -3,13 +3,13 @@
 The project was created as a part of my study in the university. 
 It consists of infix to postfix converter, postfix calculator powered by custom String, Stack and Queue classes along with tests to check the functionality of algorithm.
 Additionally I wrote script Python to automatically compile and run algorithm for every of those tests and compare the results.
-Tests were accessible as a part of the course.
+Tests were accessible as a part of the university course.
 
 The algorithm needs improvement and its current state cannot be considered final. 
 It is functional, passed all the tests (my main goal) and free from memory leaks (according to valgrind). 
 
 It can handle not only basic arithmetic operations (+-*/), but also negation (as an N function instead of minus), IF function and MAX/MIN functions (see below). 
-Tt accepts only not-negative integers as an input, but can calculate and output negative numbers.
+It accepts only not-negative integers as an input, but can calculate and output negative numbers.
 
 Below are the rules I followed while working on the project.
 
