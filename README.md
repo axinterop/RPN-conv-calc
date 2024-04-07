@@ -2,7 +2,7 @@
 
 The project was created as a part of my study in the university. 
 It consists of infix to postfix converter, postfix calculator powered by custom String, Stack and Queue classes along with tests to check the functionality of algorithm.
-Additionally I wrote script Python to automatically compile and run algorithm for every of those tests and compare the results.
+Additionally I wrote script in Python to automatically compile and run algorithm for every of those tests and compare the results.
 Tests were accessible as a part of the university course.
 
 The algorithm needs improvement and its current state cannot be considered final. 
