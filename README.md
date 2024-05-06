@@ -15,7 +15,7 @@ Below are the rules I followed while working on the project.
 
 
 
-# Rules
+# Requirements
 
 Write an integer calculator. Use the postfix notation to handle precedence of operators, functions and parentheses.
 Input:
