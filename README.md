@@ -1,6 +1,6 @@
 # Reverse Polish Notation Convertor and Calculator
 
-This project consists of **infix to postfix converter** and **postfix calculator** powered by custom String, Stack and Queue classes. The repo includes tests to check the functionality of algorithm, and were used with a python script to automatically compile and run algorithm for every of those tests and compare the results.
+This project consists of **infix to postfix converter** and **postfix calculator** powered by custom String, Stack and Queue classes. The repo includes tests to check the functionality of algorithm that are used with a python script to automatically compile and run algorithm for every of those tests and compare the results.
 
 The algorithm needs improvement and its current state cannot be considered final. 
 It is functional, passed all the tests (my main goal) and free from memory leaks (according to valgrind). 
