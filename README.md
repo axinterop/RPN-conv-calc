@@ -1,4 +1,4 @@
-# Reverse Polish Notation Convertor and Calculator
+# Reverse Polish Notation Converter and Calculator
 
 This project consists of **infix to postfix converter** and **postfix calculator** powered by custom String, Stack and Queue classes. The repo includes tests to check the functionality of algorithm that are used with a python script to automatically compile and run algorithm for every of those tests and compare the results.
 
