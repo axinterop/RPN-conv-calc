@@ -12,19 +12,21 @@ Infix to Postfix converter and Postfix calculator.
 - Calculates and outputs negative numbers (though, doesn't accept negative numbers of input).
 - No memory leaks.
 
-# Description of operations
+# Description
+
+## Operations
 
 The following operations are available, in the ascending order of priority:
 
-- a + b, a - b ;
-- a * b, a / b - all operations are made on integers, hence the results of division are rounded down (standard C '/' operator). No division by 0.
+- `a + b`, `a - b`.
+- `a * b`, `a / b` - all operations are made on integers, hence the results of division are rounded down (standard C '/' operator). Division by 0 is not allowed.
 - Same priority:
-  - IF(a, b, c) - if a > 0 return b, otherwise c,
-  - N a - unary negation, i.e. -a,
-  - MIN( a1, a2, ... ), MAX( a1, a2, ... ) - functions MIN and MAX do not have a restriction on the number of parameters;
-- ( ... ) - parentheses.
+  - `IF(a, b, c)` - if a > 0 return b, otherwise c.
+  - `N a` - unary negation, i.e. -a.
+  - `MIN( a1, a2, ... )`, `MAX( a1, a2, ... )` - functions MIN and MAX do not have a restriction on the number of parameters.
+- `( ... )` - parentheses.
 
-# Accepted input
+## Accepted input
 
 Basic input:
 - n - number of formulas
@@ -38,7 +40,7 @@ Rules:
 - Every function name must consist only of capital letters.
 - All values must be within range of int.
 
-# Output
+## Generated output
 
 - Formula in the postfix notation.
 - Printed operator or function and the content of the stack, before executing any operation.
