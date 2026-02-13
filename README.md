@@ -1,51 +1,50 @@
 # Reverse Polish Notation Converter and Calculator
 
-This project consists of **infix to postfix converter** and **postfix calculator** powered by custom String, Stack and Queue classes. The repo includes tests to check the functionality of algorithm that are used with a python script to automatically compile and run algorithm for every of those tests and compare the results.
+Infix to Postfix converter and Postfix calculator.
 
-The algorithm needs improvement and its current state cannot be considered final. 
-It is functional, passed all the tests (my main goal) and free from memory leaks (according to valgrind). 
+# Features
 
-It can handle not only basic arithmetic operations (+-*/), but also negation (as an N function instead of minus), IF function and MAX/MIN functions (see below). 
-It accepts only not-negative integers as an input, but can calculate and output negative numbers.
+- Manually implemented String, Stack and Queue classes.
+- Tests: python script that runs tests and compares results.
+- Handles basic arithmetic operations (`+-*/`).
+- Handles functions: `N` (negation), `IF`, `MAX`/`MIN` (more on it below).
+- Handles parentheses.
+- Calculates and outputs negative numbers (though, doesn't accept negative numbers of input).
+- No memory leaks.
 
-Below are the rules I followed while working on the project.
-
-
-# Requirements
-
-Write an integer calculator. Use the postfix notation to handle precedence of operators, functions and parentheses.
-Input:
-- n - number of formulas
-- n formulas, each in the form given below.
-
-Each formula is a valid expression in an infix notation with functions and ends with a dot ('.'). Each token is separated by some whitespace characters. Each operand is a positive integer (although the result of an operation might be negative). Each operator is a single character and every function name consists only of capital letters.
+# Description of operations
 
 The following operations are available, in the ascending order of priority:
 
 - a + b, a - b ;
-- a * b, a / b - all operations are made on integers, hence the results of division are rounded down (standard C '/' operator). You cannot divide by 0 (see the Output section);
+- a * b, a / b - all operations are made on integers, hence the results of division are rounded down (standard C '/' operator). No division by 0.
 - Same priority:
   - IF(a, b, c) - if a > 0 return b, otherwise c,
   - N a - unary negation, i.e. -a,
   - MIN( a1, a2, ... ), MAX( a1, a2, ... ) - functions MIN and MAX do not have a restriction on the number of parameters;
 - ( ... ) - parentheses.
 
-### Output for each formula:
+# Accepted input
 
-- the formula in the postfix notation;
-- before executing each operation print the operator or function and the content of the stack;
-- the final result;
-- if you encounter a division by 0, print "ERROR" and move to the next expression. 
+Basic input:
+- n - number of formulas
+- n formulas, each in the form given below.
 
-### Additional remarks and hints:
+Rules:
+- Each formula must be in an infix notation and end with a dot ('.').
+- Each token must be separated by some whitespace characters.
+- Each operand must be a positive integer.
+- Each operator must be a single character.
+- Every function name must consist only of capital letters.
+- All values must be within range of int.
 
-- Each instance of MINi and MAXi function has a specified number of arguments, i, in the postfix notation (see the example output)
-- Do not store the given expressions (i.e. in the infix notation), only the latest token should be sufficient. Consequently, you should count the arguments of MIN and MAX during the conversion. Additional instances of data structures might be required.
-- You may assume that all values will be withing range of int. Note that each token is separate.
-- Using the type string and data structures from libraries is **forbidden**.
-- For the full amount of points, a stack based on a list is required. In the case of a stack implemented using an array, the amount of points is scaled by 0.75.
-  - This does not mean that stacks are the only permitted data structures. You can use additonal data structures to solve encountered difficulties beyond the basic algorithms from the lecture.
-- Remember to clean up any unused memory. Memory leaks will be penalized.
+# Output
+
+- Formula in the postfix notation.
+- Printed operator or function and the content of the stack, before executing any operation.
+- Final result.
+- If division by 0 encountered, "ERROR" is printed. Algorithm moves to the next expression.
+- Each instance of `MIN` and `MAX` function has a specified number of arguments, `i`, in the postfix notation (e.g. `MIN3`, `MAX5` - see examples).
 
 # Examples
 Example input:
@@ -97,6 +96,3 @@ N 3 24
 -8
 ```
 
-# Credits
-
-The author of the rules is Robert O***. The full name is withheld for confidentiality reasons.
